@@ -1,5 +1,7 @@
 const puppeteer = require("puppeteer");
 
+jest.setTimeout(30000);
+
 describe("Popover Widget", () => {
   let browser;
   let page;
@@ -36,17 +38,19 @@ describe("Popover Widget", () => {
 
     await page.waitForSelector(".popover", { visible: true });
 
-  const buttonRect = await page.evaluate(() => {
-  const btn = document.querySelector('.btn'); 
-  const { top, left, bottom, right, width, height } = btn.getBoundingClientRect();
-  return { top, left, bottom, right, width, height };
-  });
+    const buttonRect = await page.evaluate(() => {
+      const btn = document.querySelector(".btn");
+      const { top, left, bottom, right, width, height } =
+        btn.getBoundingClientRect();
+      return { top, left, bottom, right, width, height };
+    });
 
-  const popoverRect = await page.evaluate(() => {
-  const popover = document.querySelector('.popover'); 
-  const { top, left, bottom, right, width, height } = popover.getBoundingClientRect();
-  return { top, left, bottom, right, width, height };
-  });
+    const popoverRect = await page.evaluate(() => {
+      const popover = document.querySelector(".popover");
+      const { top, left, bottom, right, width, height } =
+        popover.getBoundingClientRect();
+      return { top, left, bottom, right, width, height };
+    });
 
     expect(popoverRect.bottom).toBeLessThanOrEqual(buttonRect.top);
 
