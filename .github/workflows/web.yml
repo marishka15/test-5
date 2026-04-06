@@ -41,7 +41,7 @@ jobs:
           node-version: 22.14.0
           cache: 'npm'
       - run: npm install
-      - run: npm test
+      - run: npm test --testEnvironment=jsdom
 
   build:
     needs: [eslint, test]

@@ -5,7 +5,7 @@ jest.setTimeout(30000);
 describe("Popover Widget", () => {
   let browser;
   let page;
-
+  
   beforeEach(async () => {
     browser = await puppeteer.launch({
       headless: false,
@@ -15,9 +15,9 @@ describe("Popover Widget", () => {
 
     page = await browser.newPage();
     await page.goto("http://localhost:3000");
-  });
+    });
 
-  test("Popover should render and appear on button click", async () => {
+    test("Popover should render and appear on button click", async () => {
     const button = await page.$(".btn");
     await button.click();
 
@@ -30,26 +30,24 @@ describe("Popover Widget", () => {
     expect(content).toBe(
       "And here's some amazing content. It's very engaging. Right?",
     );
-  });
+    });
 
-  test("Popover should be positioned above the button", async () => {
+    test("Popover should be positioned above the button", async () => {
     const button = await page.$(".btn");
     await button.click();
 
     await page.waitForSelector(".popover", { visible: true });
 
     const buttonRect = await page.evaluate(() => {
-      const btn = document.querySelector(".btn");
-      const { top, left, bottom, right, width, height } =
-        btn.getBoundingClientRect();
-      return { top, left, bottom, right, width, height };
+    const btn = document.querySelector(".btn");
+    const { top, left, bottom, right, width, height } = btn.getBoundingClientRect();
+    return { top, left, bottom, right, width, height };
     });
 
     const popoverRect = await page.evaluate(() => {
-      const popover = document.querySelector(".popover");
-      const { top, left, bottom, right, width, height } =
-        popover.getBoundingClientRect();
-      return { top, left, bottom, right, width, height };
+    const popover = document.querySelector(".popover");
+    const { top, left, bottom, right, width, height } = popover.getBoundingClientRect();
+    return { top, left, bottom, right, width, height };
     });
 
     expect(popoverRect.bottom).toBeLessThanOrEqual(buttonRect.top);
@@ -59,7 +57,7 @@ describe("Popover Widget", () => {
     const diff = Math.abs(buttonCenter - popoverCenter);
 
     expect(diff).toBeLessThanOrEqual(5);
-  });
+    });
 
   afterEach(async () => {
     if (browser) {
