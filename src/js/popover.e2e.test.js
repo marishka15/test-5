@@ -11,6 +11,11 @@ describe("Popover Widget", () => {
       headless: false,
       slowMo: 100,
       devtools: true,
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage"
+      ]
     });
 
     page = await browser.newPage();
