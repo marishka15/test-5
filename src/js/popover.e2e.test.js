@@ -9,11 +9,11 @@ describe("Popover Widget", () => {
   beforeEach(async () => {
     browser = await puppeteer.launch({
       headless: false,
-      // args: [
-      //   "--no-sandbox",
-      //   "--disable-setuid-sandbox",
-      //   "--disable-dev-shm-usage"
-      // ]
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage"
+      ]
     });
 
     page = await browser.newPage();
