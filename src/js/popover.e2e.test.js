@@ -1,4 +1,4 @@
-import puppeteer from "puppeteer";
+const puppeteer = require("puppeteer");
 
 describe("Popover Widget", () => {
   let browser;
@@ -16,36 +16,10 @@ describe("Popover Widget", () => {
   });
 
   test("Popover should render and appear on button click", async () => {
-  console.log("1. Ищем кнопку...");
-  const button = await page.$('btn btn-primary"]');
-  if (!button) {
-    throw new Error("Кнопка не найдена!");
-  }
-
-  console.log("2. Кликаем по кнопке...");
-  await button.click();
-
-  console.log("3. Ждём появления popover...");
-  await page.waitForSelector(".popover", { visible: true, timeout: 10000 });
-
-  console.log("4. Читаем заголовок и содержимое...");
-  const title = await page.$eval(".popover-header", (el) => el.textContent);
-  const content = await page.$eval(".popover-body", (el) => el.textContent);
-
-  console.log("Заголовок:", title);
-  console.log("Содержимое:", content);
-
-  expect(title).toBe("Popover title");
-  expect(content).toBe(
-    "And here's some amazing content. It's very engaging. Right?",
-  );
-});
-
-  test("Popover should render and appear on button click", async () => {
-    const button = await page.$('btn btn-primary');
+    const button = await page.$(".btn");
     await button.click();
 
-    await page.waitFor(".popover", { visible: true });
+    await page.waitForSelector(".popover", { visible: true });
 
     const title = await page.$eval(".popover-header", (el) => el.textContent);
     const content = await page.$eval(".popover-body", (el) => el.textContent);
@@ -57,20 +31,22 @@ describe("Popover Widget", () => {
   });
 
   test("Popover should be positioned above the button", async () => {
-    const button = await page.$('btn btn-primary');
+    const button = await page.$(".btn");
     await button.click();
 
-    await page.waitFor(".popover", { visible: true });
+    await page.waitForSelector(".popover", { visible: true });
 
-    const buttonRect = await page.evaluate(() => {
-      const btn = document.querySelector('btn btn-primary"]');
-      return btn.getBoundingClientRect();
-    });
+  const buttonRect = await page.evaluate(() => {
+  const btn = document.querySelector('.btn'); 
+  const { top, left, bottom, right, width, height } = btn.getBoundingClientRect();
+  return { top, left, bottom, right, width, height };
+  });
 
-    const popoverRect = await page.evaluate(() => {
-      const pop = document.querySelector(".popover");
-      return pop.getBoundingClientRect();
-    });
+  const popoverRect = await page.evaluate(() => {
+  const popover = document.querySelector('.popover'); 
+  const { top, left, bottom, right, width, height } = popover.getBoundingClientRect();
+  return { top, left, bottom, right, width, height };
+  });
 
     expect(popoverRect.bottom).toBeLessThanOrEqual(buttonRect.top);
 
