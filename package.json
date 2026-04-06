@@ -8,6 +8,7 @@
     "build": "webpack --mode production",
     "lint": "eslint . --fix",
     "test": "jest src/js/popover.e2e.test.js --runInBand",
+    "e2e": "start-server-and-test start http://localhost:3000 test",
     "coverage": "jest --coverage",
     "preshow:coverage": "npm run coverage",
     "show:coverage": "live-server coverage/lcov-report",
